@@ -1,0 +1,1170 @@
+3.2.0.alpha.35 (Bleeding Edge)
+618745c0c572aa43d105b7936e6f361f4e7dc74d
+o:Sass::Tree::RootNode
+:@template"$/* Forms.less
+ * Base styles for various input types, form layouts, and states
+ * ------------------------------------------------------------- */
+
+
+// FORM STYLES
+// -----------
+
+form {
+  margin-bottom: $baseline;
+}
+
+// Groups of fields with labels on top (legends)
+fieldset {
+  margin-bottom: $baseline;
+  padding-top: $baseline;
+  legend {
+    display: block;
+    padding-left: 150px;
+    font-size: $basefont * 1.5;
+    line-height: 1;
+    color: $grayDark;
+    *padding: 0 0 5px 145px; /* IE6-7 */
+    *line-height: 1.5; /* IE6-7 */
+  }
+}
+
+// Parent element that clears floats and wraps labels and fields together
+form .clearfix {
+  margin-bottom: $baseline;
+  @include clearfix();
+}
+
+// Set font for forms
+label,
+input,
+select,
+textarea {
+  @include font-sans-serif(normal,13px,normal);
+}
+
+// Float labels left
+label {
+  padding-top: 6px;
+  font-size: $basefont;
+  line-height: $baseline;
+  float: left;
+  width: 130px;
+  text-align: right;
+  color: $grayDark;
+}
+
+// Shift over the inside div to align all label's relevant content
+form .input {
+  margin-left: 150px;
+}
+
+// Checkboxs and radio buttons
+input[type=checkbox],
+input[type=radio] {
+  cursor: pointer;
+}
+
+// Inputs, Textareas, Selects
+input,
+textarea,
+select,
+.uneditable-input {
+  display: inline-block;
+  width: 210px;
+  height: $baseline;
+  padding: 4px;
+  font-size: $basefont;
+  line-height: $baseline;
+  color: $gray;
+  border: 1px solid #ccc;
+  @include border-radius(3px);
+}
+
+/* mini reset for non-html5 file types */
+input[type=checkbox],
+input[type=radio] {
+  width: auto;
+  height: auto;
+  padding: 0;
+  margin: 3px 0;
+  *margin-top: 0; /* IE6-7 */
+  line-height: normal;
+  border: none;
+}
+
+input[type=file] {
+  background-color: $white;
+  padding: initial;
+  border: initial;
+  line-height: initial;
+  @include box-shadow(none);
+}
+
+input[type=button],
+input[type=reset],
+input[type=submit] {
+  width: auto;
+  height: auto;
+}
+
+select,
+input[type=file] {
+  height: $baseline * 1.5; // In IE7, the height of the select element cannot be changed by height, only font-size
+  line-height: $baseline * 1.5;
+  *margin-top: 4px; /* For IE7, add top margin to align select with labels */
+}
+
+// Make multiple select elements height not fixed
+select[multiple] {
+  height: inherit;
+}
+
+textarea {
+  height: auto;
+}
+
+// For text that needs to appear as an input but should not be an input
+.uneditable-input {
+  background-color: $white;
+  display: block;
+  border-color: #eee;
+  @include box-shadow(inset 0 1px 2px rgba(0,0,0,.025));
+  cursor: not-allowed;
+}
+
+// Placeholder text gets special styles; can't be bundled together though for some reason
+:-moz-placeholder {
+  color: $grayLight;
+}
+::-webkit-input-placeholder {
+  color: $grayLight;
+}
+
+// Focus states
+input,
+textarea {
+  $transition: border linear .2s, box-shadow linear .2s;
+  @include transition($transition);
+  @include box-shadow(inset 0 1px 3px rgba(0,0,0,.1));
+}
+input:focus,
+textarea:focus {
+  outline: 0;
+  border-color: rgba(82,168,236,.8);
+  $shadow: inset 0 1px 3px rgba(0,0,0,.1), 0 0 8px rgba(82,168,236,.6);
+  @include box-shadow($shadow);
+}
+input[type=file]:focus,
+input[type=checkbox]:focus,
+select:focus {
+  @include box-shadow(none); // override for file inputs
+  outline: 1px dotted #666; // Selet elements don't get box-shadow styles, so instead we do outline
+}
+
+// Error styles
+form div.clearfix.error {
+  background: lighten($red, 57%);
+  padding: 10px 0;
+  margin: -10px 0 10px;
+  @include border-radius(4px);
+  $error-text: desaturate(lighten($red, 25%), 25%);
+  > label,
+  span.help-inline,
+  span.help-block {
+    color: $red;
+  }
+  input,
+  textarea {
+    border-color: $error-text;
+    @include box-shadow(0 0 3px rgba(171,41,32,.25));
+    &:focus {
+      border-color: darken($error-text, 10%);
+      @include box-shadow(0 0 6px rgba(171,41,32,.5));
+    }
+  }
+  .input-prepend,
+  .input-append {
+    span.add-on {
+      background: lighten($red, 50%);
+      border-color: $error-text;
+      color: darken($error-text, 10%);
+    }
+  }
+}
+
+// Form element sizes
+// TODO v2: remove duplication here and just stick to .input-[size] in light of adding .spanN sizes
+.input-mini,
+input.mini,
+textarea.mini,
+select.mini {
+  width: 60px;
+}
+.input-small,
+input.small,
+textarea.small,
+select.small {
+  width: 90px;
+}
+.input-medium,
+input.medium,
+textarea.medium,
+select.medium {
+  width: 150px;
+}
+.input-large,
+input.large,
+textarea.large,
+select.large {
+  width: 210px;
+}
+.input-xlarge,
+input.xlarge,
+textarea.xlarge,
+select.xlarge {
+  width: 270px;
+}
+.input-xxlarge,
+input.xxlarge,
+textarea.xxlarge,
+select.xxlarge {
+  width: 530px;
+}
+textarea.xxlarge {
+  overflow-y: auto;
+}
+
+// Grid style input sizes
+// This is a duplication of the main grid .columns() mixin, but subtracts 10px to account for input padding and border
+@mixin formColumns($columnSpan: 1) {
+  display: inline-block;
+  float: none;
+  width: (($gridColumnWidth) * $columnSpan) + ($gridGutterWidth * ($columnSpan - 1)) - 10;
+  margin-left: 0;
+}
+input,
+textarea,
+select {
+  // Default columns
+  &.span1     { @include formColumns(1); }
+  &.span2     { @include formColumns(2); }
+  &.span3     { @include formColumns(3); }
+  &.span4     { @include formColumns(4); }
+  &.span5     { @include formColumns(5); }
+  &.span6     { @include formColumns(6); }
+  &.span7     { @include formColumns(7); }
+  &.span8     { @include formColumns(8); }
+  &.span9     { @include formColumns(9); }
+  &.span10    { @include formColumns(10); }
+  &.span11    { @include formColumns(11); }
+  &.span12    { @include formColumns(12); }
+  &.span13    { @include formColumns(13); }
+  &.span14    { @include formColumns(14); }
+  &.span15    { @include formColumns(15); }
+  &.span16    { @include formColumns(16); }
+}
+
+// Disabled and read-only inputs
+input[disabled],
+select[disabled],
+textarea[disabled],
+input[readonly],
+select[readonly],
+textarea[readonly] {
+  background-color: #f5f5f5;
+  border-color: #ddd;
+  cursor: not-allowed;
+}
+
+// Actions (the buttons)
+.actions {
+  background: #f5f5f5;
+  margin-top: $baseline;
+  margin-bottom: $baseline;
+  padding: ($baseline - 1) 20px $baseline 150px;
+  border-top: 1px solid #ddd;
+  @include border-radius(0 0 3px 3px);
+  .secondary-action {
+    float: right;
+    a {
+      line-height: 30px;
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+  }
+}
+
+// Help Text
+.help-inline,
+.help-block {
+  font-size: $basefont - 2;
+  line-height: $baseline;
+  color: $grayLight;
+}
+.help-inline {
+  padding-left: 5px;
+  *position: relative; /* IE6-7 */
+  *top: -5px; /* IE6-7 */
+}
+
+// Big blocks of help text
+.help-block {
+  display: block;
+  max-width: 600px;
+}
+
+// Inline Fields (input fields that appear as inline objects
+.inline-inputs {
+  color: $gray;
+  span, input {
+    display: inline-block;
+  }
+  input.mini {
+    width: 60px;
+  }
+  input.small {
+    width: 90px;
+  }
+  span {
+    padding: 0 2px 0 1px;
+  }
+}
+
+// Allow us to put symbols and text within the input field for a cleaner look
+.input-prepend,
+.input-append {
+  input {
+    @include border-radius(0 3px 3px 0);
+  }
+  .add-on {
+    position: relative;
+    background: #f5f5f5;
+    border: 1px solid #ccc;
+    z-index: 2;
+    float: left;
+    display: block;
+    width: auto;
+    min-width: 16px;
+    height: 18px;
+    padding: 4px 4px 4px 5px;
+    margin-right: -1px;
+    font-weight: normal;
+    line-height: 18px;
+    color: $grayLight;
+    text-align: center;
+    text-shadow: 0 1px 0 $white;
+    @include border-radius(3px 0 0 3px);
+  }
+  .active {
+    background: lighten($green, 30);
+    border-color: $green;
+  }
+}
+.input-prepend {
+  .add-on {
+    *margin-top: 1px; /* IE6-7 */
+  }
+}
+.input-append {
+  input {
+    float: left;
+    @include border-radius(3px 0 0 3px);
+  }
+  .add-on {
+    @include border-radius(0 3px 3px 0);
+    margin-right: 0;
+    margin-left: -1px;
+  }
+}
+
+// Stacked options for forms (radio buttons or checkboxes)
+.inputs-list {
+  margin: 0 0 5px;
+  width: 100%;
+  li {
+    display: block;
+    padding: 0;
+    width: 100%;
+  }
+  label {
+    display: block;
+    float: none;
+    width: auto;
+    padding: 0;
+    line-height: $baseline;
+    text-align: left;
+    white-space: normal;
+    strong {
+      color: $gray;
+    }
+    small {
+      font-size: $basefont - 2;
+      font-weight: normal;
+    }
+  }
+  .inputs-list {
+    margin-left: 25px;
+    margin-bottom: 10px;
+    padding-top: 0;
+  }
+  &:first-child {
+    padding-top: 6px;
+  }
+  li + li {
+    padding-top: 2px;
+  }
+  input[type=radio],
+  input[type=checkbox] {
+    margin-bottom: 0;
+  }
+}
+
+// Stacked forms
+.form-stacked {
+  padding-left: 20px;
+  fieldset {
+    padding-top: $baseline / 2;
+  }
+  legend {
+    padding-left: 0;
+  }
+  label {
+    display: block;
+    float: none;
+    width: auto;
+    font-weight: bold;
+    text-align: left;
+    line-height: 20px;
+    padding-top: 0;
+  }
+  .clearfix {
+    margin-bottom: $baseline / 2;
+    div.input {
+      margin-left: 0;
+    }
+  }
+  .inputs-list {
+    margin-bottom: 0;
+    li {
+      padding-top: 0;
+      label {
+        font-weight: normal;
+        padding-top: 0;
+      }
+    }
+  }
+  div.clearfix.error {
+    padding-top: 10px;
+    padding-bottom: 10px;
+    padding-left: 10px;
+    margin-top: 0;
+    margin-left: -10px;
+  }
+  .actions {
+    margin-left: -20px;
+    padding-left: 20px;
+  }
+}
+:@options{ :@has_childrenT:
+@linei:@children[Go:Sass::Tree::CommentNode
+;@:@value["í/* Forms.less
+ * Base styles for various input types, form layouts, and states
+ * ------------------------------------------------------------- */;	i:
+@type:normal;
+[ o;
+;@;["%/* FORM STYLES
+ * ----------- */;	i;:silent;
+[ o:Sass::Tree::RuleNode:
+@tabsi ;@;T:
+@rule["	form;	i:@parsed_ruleso:"Sass::Selector::CommaSequence:@filename" ;	i:@members[o:Sass::Selector::Sequence;[o:#Sass::Selector::SimpleSequence;@;	i;[o:Sass::Selector::Element	:
+@name["	form;@;	i:@namespace0;
+[o:Sass::Tree::PropNode;i :@prop_syntax:new;["margin-bottom;@;o:Sass::Script::Variable	;"baseline;@;	i:@underscored_name"baseline;	i;
+[ o;
+;@;["8/* Groups of fields with labels on top (legends) */;	i;;;
+[ o;;i ;@;T;["fieldset;	i;o;;" ;	i;[o;;[o;;@.;	i;[o;	;["fieldset;@.;	i;0;
+[o;;i ;;;["margin-bottom;@;o;	;"baseline;@;	i; "baseline;	i;
+[ o;;i ;;;["padding-top;@;o;	;"baseline;@;	i; "baseline;	i;
+[ o;;i ;@;T;["legend;	i;o;;" ;	i;[o;;[o;;@J;	i;[o;	;["legend;@J;	i;0;
+[o;;i ;;;["display;@;o:Sass::Script::String;@;"
+block;:identifier;	i;
+[ o;;i ;;;["padding-left;@;o;!;@;"
+150px;;";	i;
+[ o;;i ;;;["font-size;@;o:Sass::Script::Operation
+:@operand1o;	;"basefont;@;	i; "basefont;@;	i:@operand2o:Sass::Script::Number:@original"1.5;@;f1.5;	i:@denominator_units[ :@numerator_units[ :@operator:
+times;	i;
+[ o;;i ;;;["line-height;@;o;!;@;"1;;";	i;
+[ o;;i ;;;["
+color;@;o;	;"grayDark;@;	i; "grayDark;	i;
+[ o;;i ;;;["*padding;@;o;!;@;"0 0 5px 145px;;";	i;
+[ o;
+;@;["/* IE6-7 */;	i;;;
+[ o;;i ;;;["*line-height;@;o;!;@;"1.5;;";	i;
+[ o;
+;@;["/* IE6-7 */;	i;;;
+[ o;
+;@;["Q/* Parent element that clears floats and wraps labels and fields together */;	i!;;;
+[ o;;i ;@;T;["form .clearfix;	i";o;;" ;	i";[o;;[o;;@ë;	i";[o;	;["	form;@ë;	i";0o;;@ë;	i";[o:Sass::Selector::Class;["clearfix;@ë;	i";
+[o;;i ;;;["margin-bottom;@;o;	;"baseline;@;	i#; "baseline;	i#;
+[ o:Sass::Tree::MixinNode;"clearfix;@;	i$:
+@args[ ;
+[ :@keywords{ o;
+;@;["/* Set font for forms */;	i';;;
+[ o;;i ;@;T;["#label,
+input,
+select,
+textarea;	i+;o;;" ;	i+;[	o;;[o;;@¥;	i+;[o;	;["
+label;@¥;	i+;0o;;["
+o;;@¥;	i+;[o;	;["
+input;@¥;	i+;0o;;["
+o;;@¥;	i+;[o;	;["select;@¥;	i+;0o;;["
+o;;@¥;	i+;[o;	;["textarea;@¥;	i+;0;
+[o;-;"font-sans-serif;@;	i,;.[o;!	;@;"normal;	i,;;"o;&;'"	13px;@;i;	i,;([ ;)["pxo;!	;@;"normal;	i,;;";
+[ ;/{ o;
+;@;["/* Float labels left */;	i/;;;
+[ o;;i ;@;T;["
+label;	i0;o;;" ;	i0;[o;;[o;;@Ï;	i0;[o;	;["
+label;@Ï;	i0;0;
+[o;;i ;;;["padding-top;@;o;!;@;"6px;;";	i1;
+[ o;;i ;;;["font-size;@;o;	;"basefont;@;	i2; "basefont;	i2;
+[ o;;i ;;;["line-height;@;o;	;"baseline;@;	i3; "baseline;	i3;
+[ o;;i ;;;["
+float;@;o;!;@;"	left;;";	i4;
+[ o;;i ;;;["
+width;@;o;!;@;"
+130px;;";	i5;
+[ o;;i ;;;["text-align;@;o;!;@;"
+right;;";	i6;
+[ o;;i ;;;["
+color;@;o;	;"grayDark;@;	i7; "grayDark;	i7;
+[ o;
+;@;["J/* Shift over the inside div to align all label's relevant content */;	i:;;;
+[ o;;i ;@;T;["form .input;	i;;o;;" ;	i;;[o;;[o;;@+;	i;;[o;	;["	form;@+;	i;;0o;;@+;	i;;[o;,;["
+input;@+;	i;;
+[o;;i ;;;["margin-left;@;o;!;@;"
+150px;;";	i<;
+[ o;
+;@;["&/* Checkboxs and radio buttons */;	i?;;;
+[ o;;i ;@;T;[",input[type=checkbox],
+input[type=radio];	iA;o;;" ;	iA;[o;;[o;;@H;	iA;[o;	;["
+input;@H;	iA;0o:Sass::Selector::Attribute;["	type;@H;["checkbox;	iA;0;*"=o;;["
+o;;@H;	iA;[o;	;["
+input;@H;	iA;0o;0;["	type;@H;["
+radio;	iA;0;*"=;
+[o;;i ;;;["cursor;@;o;!;@;"pointer;;";	iB;
+[ o;
+;@;["%/* Inputs, Textareas, Selects */;	iE;;;
+[ o;;i ;@;T;["/input,
+textarea,
+select,
+.uneditable-input;	iI;o;;" ;	iI;[	o;;[o;;@t;	iI;[o;	;["
+input;@t;	iI;0o;;["
+o;;@t;	iI;[o;	;["textarea;@t;	iI;0o;;["
+o;;@t;	iI;[o;	;["select;@t;	iI;0o;;["
+o;;@t;	iI;[o;,;["uneditable-input;@t;	iI;
+[o;;i ;;;["display;@;o;!;@;"inline-block;;";	iJ;
+[ o;;i ;;;["
+width;@;o;!;@;"
+210px;;";	iK;
+[ o;;i ;;;["height;@;o;	;"baseline;@;	iL; "baseline;	iL;
+[ o;;i ;;;["padding;@;o;!;@;"4px;;";	iM;
+[ o;;i ;;;["font-size;@;o;	;"basefont;@;	iN; "basefont;	iN;
+[ o;;i ;;;["line-height;@;o;	;"baseline;@;	iO; "baseline;	iO;
+[ o;;i ;;;["
+color;@;o;	;"	gray;@;	iP; "	gray;	iP;
+[ o;;i ;;;["border;@;o;!;@;"1px solid #ccc;;";	iQ;
+[ o;-;"border-radius;@;	iR;.[o;&;'"3px;@;i;	iR;([ ;)["px;
+[ ;/{ o;
+;@;["./* mini reset for non-html5 file types */;	iU;;;
+[ o;;i ;@;T;[",input[type=checkbox],
+input[type=radio];	iW;o;;" ;	iW;[o;;[o;;@‹;	iW;[o;	;["
+input;@‹;	iW;0o;0;["	type;@‹;["checkbox;	iW;0;*"=o;;["
+o;;@‹;	iW;[o;	;["
+input;@‹;	iW;0o;0;["	type;@‹;["
+radio;	iW;0;*"=;
+[o;;i ;;;["
+width;@;o;!;@;"	auto;;";	iX;
+[ o;;i ;;;["height;@;o;!;@;"	auto;;";	iY;
+[ o;;i ;;;["padding;@;o;!;@;"0;;";	iZ;
+[ o;;i ;;;["margin;@;o;!;@;"
+3px 0;;";	i[;
+[ o;;i ;;;["*margin-top;@;o;!;@;"0;;";	i\;
+[ o;
+;@;["/* IE6-7 */;	i\;;;
+[ o;;i ;;;["line-height;@;o;!;@;"normal;;";	i];
+[ o;;i ;;;["border;@;o;!;@;"	none;;";	i^;
+[ o;;i ;@;T;["input[type=file];	ia;o;;" ;	ia;[o;;[o;;@,;	ia;[o;	;["
+input;@,;	ia;0o;0;["	type;@,;["	file;	ia;0;*"=;
+[
+o;;i ;;;["background-color;@;o;	;"
+white;@;	ib; "
+white;	ib;
+[ o;;i ;;;["padding;@;o;!;@;"initial;;";	ic;
+[ o;;i ;;;["border;@;o;!;@;"initial;;";	id;
+[ o;;i ;;;["line-height;@;o;!;@;"initial;;";	ie;
+[ o;-;"box-shadow;@;	if;.[o;!	;@;"	none;	if;;";
+[ ;/{ o;;i ;@;T;[">input[type=button],
+input[type=reset],
+input[type=submit];	ik;o;;" ;	ik;[o;;[o;;@`;	ik;[o;	;["
+input;@`;	ik;0o;0;["	type;@`;["button;	ik;0;*"=o;;["
+o;;@`;	ik;[o;	;["
+input;@`;	ik;0o;0;["	type;@`;["
+reset;	ik;0;*"=o;;["
+o;;@`;	ik;[o;	;["
+input;@`;	ik;0o;0;["	type;@`;["submit;	ik;0;*"=;
+[o;;i ;;;["
+width;@;o;!;@;"	auto;;";	il;
+[ o;;i ;;;["height;@;o;!;@;"	auto;;";	im;
+[ o;;i ;@;T;["select,
+input[type=file];	iq;o;;" ;	iq;[o;;[o;;@ú;	iq;[o;	;["select;@ú;	iq;0o;;["
+o;;@ú;	iq;[o;	;["
+input;@ú;	iq;0o;0;["	type;@ú;["	file;	iq;0;*"=;
+[
+o;;i ;;;["height;@;o;#
+;$o;	;"baseline;@;	ir; "baseline;@;	ir;%o;&;'"1.5;@;f1.5;	ir;(@j;)[ ;*;+;	ir;
+[ o;
+;@;["_/* In IE7, the height of the select element cannot be changed by height, only font-size */;	ir;;;
+[ o;;i ;;;["line-height;@;o;#
+;$o;	;"baseline;@;	is; "baseline;@;	is;%o;&;'"1.5;@;f1.5;	is;(@j;)[ ;*;+;	is;
+[ o;;i ;;;["*margin-top;@;o;!;@;"4px;;";	it;
+[ o;
+;@;[">/* For IE7, add top margin to align select with labels */;	it;;;
+[ o;
+;@;["9/* Make multiple select elements height not fixed */;	iw;;;
+[ o;;i ;@;T;["select[multiple];	ix;o;;" ;	ix;[o;;[o;;@‚;	ix;[o;	;["select;@‚;	ix;0o;0;["multiple;@‚;0;	ix;0;*0;
+[o;;i ;;;["height;@;o;!;@;"inherit;;";	iy;
+[ o;;i ;@;T;["textarea;	i|;o;;" ;	i|;[o;;[o;;@˘;	i|;[o;	;["textarea;@˘;	i|;0;
+[o;;i ;;;["height;@;o;!;@;"	auto;;";	i};
+[ o;
+;@;["O/* For text that needs to appear as an input but should not be an input */;	i{;;;
+[ o;;i ;@;T;[".uneditable-input;	i|;o;;" ;	i|;[o;;[o;;@;	i|;[o;,;["uneditable-input;@;	i|;
+[
+o;;i ;;;["background-color;@;o;	;"
+white;@;	i}; "
+white;	i};
+[ o;;i ;;;["display;@;o;!;@;"
+block;;";	i~;
+[ o;;i ;;;["border-color;@;o;!;@;"	#eee;;";	i;
+[ o;-;"box-shadow;@;	iÄ;.[o:Sass::Script::List	;@;[
+o;!	;@;"
+inset;	iÄ;;"o;&;'"0;@;i ;	iÄ;(@j;)[ o;&;'"1px;@;i;	iÄ;([ ;)["pxo;&;'"2px;@;i;	iÄ;([ ;)["pxo:Sass::Script::Funcall
+;"	rgba;@;	iÄ;.[	o;&;'"0;@;i ;	iÄ;(@j;)[ o;&;'"0;@;i ;	iÄ;(@j;)[ o;&;'"0;@;i ;	iÄ;(@j;)[ o;&;'"
+0.025;@;f0.025000000000000001 ôö;	iÄ;(@j;)[ ;/{ ;	iÄ:@separator:
+space;
+[ ;/{ o;;i ;;;["cursor;@;o;!;@;"not-allowed;;";	iÅ;
+[ o;
+;@;["a/* Placeholder text gets special styles; can't be bundled together though for some reason */;	iÑ;;;
+[ o;;i ;@;T;[":-moz-placeholder;	iÖ;o;;" ;	iÖ;[o;;[o;;@c;	iÖ;[o:Sass::Selector::Pseudo
+;["-moz-placeholder;@c:	@arg0;	iÖ;:
+class;
+[o;;i ;;;["
+color;@;o;	;"grayLight;@;	iÜ; "grayLight;	iÜ;
+[ o;;i ;@;T;[" ::-webkit-input-placeholder;	ià;o;;" ;	ià;[o;;[o;;@x;	ià;[o;5
+;["-webkit-input-placeholder;@x;60;	ià;:element;
+[o;;i ;;;["
+color;@;o;	;"grayLight;@;	iâ; "grayLight;	iâ;
+[ o;
+;@;["/* Focus states */;	iå;;;
+[ o;;i ;@;T;["input,
+textarea;	ié;o;;" ;	ié;[o;;[o;;@ë;	ié;[o;	;["
+input;@ë;	ié;0o;;["
+o;;@ë;	ié;[o;	;["textarea;@ë;	ié;0;
+[o:Sass::Tree::VariableNode:
+@expro;1	;@;[o;1	;@;[o;!	;@;"border;	iè;;"o;!	;@;"linear;	iè;;"o;&;'"	0.2s;@;f0.20000000000000001 ôö;	iè;([ ;)["s;	iè;3;4o;1	;@;[o;!	;@;"box-shadow;	iè;;"o;!	;@;"linear;	iè;;"o;&;'"	0.2s;@;f0.20000000000000001 ôö;	iè;([ ;)["s;	iè;3;4;	iè;3:
+comma;"transition;@;	iè:@guarded0;
+[ o;-;"transition;@;	iê;.[o;	;"transition;@;	iê; "transition;
+[ ;/{ o;-;"box-shadow;@;	ië;.[o;1	;@;[
+o;!	;@;"
+inset;	ië;;"o;&;'"0;@;i ;	ië;(@j;)[ o;&;'"1px;@;i;	ië;([ ;)["pxo;&;'"3px;@;i;	ië;([ ;)["pxo;2
+;"	rgba;@;	ië;.[	o;&;'"0;@;i ;	ië;(@j;)[ o;&;'"0;@;i ;	ië;(@j;)[ o;&;'"0;@;i ;	ië;(@j;)[ o;&;'"0.1;@;f0.10000000000000001 ôö;	ië;(@j;)[ ;/{ ;	ië;3;4;
+[ ;/{ o;;i ;@;T;[" input:focus,
+textarea:focus;	iî;o;;" ;	iî;[o;;[o;;@Û;	iî;[o;	;["
+input;@Û;	iî;0o;5
+;["
+focus;@Û;60;	iî;;7o;;["
+o;;@Û;	iî;[o;	;["textarea;@Û;	iî;0o;5
+;["
+focus;@Û;60;	iî;;7;
+[	o;;i ;;;["outline;@;o;!;@;"0;;";	iï;
+[ o;;i ;;;["border-color;@;o;2
+;"	rgba;@;	iñ;.[	o;&;'"82;@;iW;	iñ;(@j;)[ o;&;'"168;@;i®;	iñ;(@j;)[ o;&;'"236;@;iÏ;	iñ;(@j;)[ o;&;'"0.8;@;f0.80000000000000004 ôö;	iñ;(@j;)[ ;/{ ;	iñ;
+[ o;9;:o;1	;@;[o;1	;@;[
+o;!	;@;"
+inset;	ió;;"o;&;'"0;@;i ;	ió;(@j;)[ o;&;'"1px;@;i;	ió;([ ;)["pxo;&;'"3px;@;i;	ió;([ ;)["pxo;2
+;"	rgba;@;	ió;.[	o;&;'"0;@;i ;	ió;(@j;)[ o;&;'"0;@;i ;	ió;(@j;)[ o;&;'"0;@;i ;	ió;(@j;)[ o;&;'"0.1;@;f0.10000000000000001 ôö;	ió;(@j;)[ ;/{ ;	ió;3;4o;1	;@;[	o;&;'"0;@;i ;	ió;(@j;)[ o;&;'"0;@;i ;	ió;(@j;)[ o;&;'"8px;@;i;	ió;([ ;)["pxo;2
+;"	rgba;@;	ió;.[	o;&;'"82;@;iW;	ió;(@j;)[ o;&;'"168;@;i®;	ió;(@j;)[ o;&;'"236;@;iÏ;	ió;(@j;)[ o;&;'"0.6;@;f0.59999999999999998 33;	ió;(@j;)[ ;/{ ;	ió;3;4;	ió;3;;;"shadow;@;	ió;<0;
+[ o;-;"box-shadow;@;	iò;.[o;	;"shadow;@;	iò; "shadow;
+[ ;/{ o;;i ;@;T;["Einput[type=file]:focus,
+input[type=checkbox]:focus,
+select:focus;	iú;o;;" ;	iú;[o;;[o;;@w;	iú;[o;	;["
+input;@w;	iú;0o;0;["	type;@w;["	file;	iú;0;*"=o;5
+;["
+focus;@w;60;	iú;;7o;;["
+o;;@w;	iú;[o;	;["
+input;@w;	iú;0o;0;["	type;@w;["checkbox;	iú;0;*"=o;5
+;["
+focus;@w;60;	iú;;7o;;["
+o;;@w;	iú;[o;	;["select;@w;	iú;0o;5
+;["
+focus;@w;60;	iú;;7;
+[	o;-;"box-shadow;@;	iù;.[o;!	;@;"	none;	iù;;";
+[ ;/{ o;
+;@;["#/* override for file inputs */;	iù;;;
+[ o;;i ;;;["outline;@;o;!;@;"1px dotted #666;;";	iû;
+[ o;
+;@;["O/* Selet elements don't get box-shadow styles, so instead we do outline */;	iû;;;
+[ o;
+;@;["/* Error styles */;	i°;;;
+[ o;;i ;@;T;["form div.clearfix.error;	i¢;o;;" ;	i¢;[o;;[o;;@√;	i¢;[o;	;["	form;@√;	i¢;0o;;@√;	i¢;[o;	;["div;@√;	i¢;0o;,;["clearfix;@√;	i¢o;,;["
+error;@√;	i¢;
+[o;;i ;;;["background;@;o;2
+;"lighten;@;	i£;.[o;	;"red;@;	i£; "redo;&;'"57%;@;i>;	i£;([ ;)["%;/{ ;	i£;
+[ o;;i ;;;["padding;@;o;!;@;"10px 0;;";	i§;
+[ o;;i ;;;["margin;@;o;1	;@;[o;&;'"
+-10px;@;iÒ;	i•;([ ;)["pxo;&;'"0;@;i ;	i•;(@j;)[ o;&;'"	10px;@;i;	i•;([ ;)["px;	i•;3;4;	i•;
+[ o;-;"border-radius;@;	i¶;.[o;&;'"4px;@;i	;	i¶;([ ;)["px;
+[ ;/{ o;9;:o;2
+;"desaturate;@;	iß;.[o;2
+;"lighten;@;	iß;.[o;	;"red;@;	iß; "redo;&;'"25%;@;i;	iß;([ ;)["%;/{ o;&;'"25%;@;i;	iß;([ ;)["%;/{ ;"error-text;@;	iß;<0;
+[ o;;i ;@;T;["3> label,
+  span.help-inline,
+  span.help-block;	i™;o;;" ;	i™;[o;;[">o;;@';	i™;[o;	;["
+label;@';	i™;0o;;["
+o;;@';	i™;[o;	;["	span;@';	i™;0o;,;["help-inline;@';	i™o;;["
+o;;@';	i™;[o;	;["	span;@';	i™;0o;,;["help-block;@';	i™;
+[o;;i ;;;["
+color;@;o;	;"red;@;	i´; "red;	i´;
+[ o;;i ;@;T;["input,
+  textarea;	iÆ;o;;" ;	iÆ;[o;;[o;;@S;	iÆ;[o;	;["
+input;@S;	iÆ;0o;;["
+o;;@S;	iÆ;[o;	;["textarea;@S;	iÆ;0;
+[o;;i ;;;["border-color;@;o;	;"error-text;@;	iØ; "error_text;	iØ;
+[ o;-;"box-shadow;@;	i∞;.[o;1	;@;[	o;&;'"0;@;i ;	i∞;(@j;)[ o;&;'"0;@;i ;	i∞;(@j;)[ o;&;'"3px;@;i;	i∞;([ ;)["pxo;2
+;"	rgba;@;	i∞;.[	o;&;'"171;@;i´;	i∞;(@j;)[ o;&;'"41;@;i.;	i∞;(@j;)[ o;&;'"32;@;i%;	i∞;(@j;)[ o;&;'"	0.25;@;f	0.25;	i∞;(@j;)[ ;/{ ;	i∞;3;4;
+[ ;/{ o;;i ;@;T;["&:focus;	i±;o;;" ;	i±;[o;;[o;;@ì;	i±;[o:Sass::Selector::Parent;@ì;	i±o;5
+;["
+focus;@ì;60;	i±;;7;
+[o;;i ;;;["border-color;@;o;2
+;"darken;@;	i≤;.[o;	;"error-text;@;	i≤; "error_texto;&;'"10%;@;i;	i≤;([ ;)["%;/{ ;	i≤;
+[ o;-;"box-shadow;@;	i≥;.[o;1	;@;[	o;&;'"0;@;i ;	i≥;(@j;)[ o;&;'"0;@;i ;	i≥;(@j;)[ o;&;'"6px;@;i;	i≥;([ ;)["pxo;2
+;"	rgba;@;	i≥;.[	o;&;'"171;@;i´;	i≥;(@j;)[ o;&;'"41;@;i.;	i≥;(@j;)[ o;&;'"32;@;i%;	i≥;(@j;)[ o;&;'"0.5;@;f0.5;	i≥;(@j;)[ ;/{ ;	i≥;3;4;
+[ ;/{ o;;i ;@;T;["$.input-prepend,
+  .input-append;	i∑;o;;" ;	i∑;[o;;[o;;@’;	i∑;[o;,;["input-prepend;@’;	i∑o;;["
+o;;@’;	i∑;[o;,;["input-append;@’;	i∑;
+[o;;i ;@;T;["span.add-on;	i∏;o;;" ;	i∏;[o;;[o;;@Î;	i∏;[o;	;["	span;@Î;	i∏;0o;,;["add-on;@Î;	i∏;
+[o;;i ;;;["background;@;o;2
+;"lighten;@;	iπ;.[o;	;"red;@;	iπ; "redo;&;'"50%;@;i7;	iπ;([ ;)["%;/{ ;	iπ;
+[ o;;i ;;;["border-color;@;o;	;"error-text;@;	i∫; "error_text;	i∫;
+[ o;;i ;;;["
+color;@;o;2
+;"darken;@;	iª;.[o;	;"error-text;@;	iª; "error_texto;&;'"10%;@;i;	iª;([ ;)["%;/{ ;	iª;
+[ o;
+;@;["|/* Form element sizes
+ * TODO v2: remove duplication here and just stick to .input-[size] in light of adding .spanN sizes */;	i¿;;;
+[ o;;i ;@;T;["8.input-mini,
+input.mini,
+textarea.mini,
+select.mini;	i≈;o;;" ;	i≈;[	o;;[o;;@';	i≈;[o;,;["input-mini;@';	i≈o;;["
+o;;@';	i≈;[o;	;["
+input;@';	i≈;0o;,;["	mini;@';	i≈o;;["
+o;;@';	i≈;[o;	;["textarea;@';	i≈;0o;,;["	mini;@';	i≈o;;["
+o;;@';	i≈;[o;	;["select;@';	i≈;0o;,;["	mini;@';	i≈;
+[o;;i ;;;["
+width;@;o;!;@;"	60px;;";	i∆;
+[ o;;i ;@;T;["<.input-small,
+input.small,
+textarea.small,
+select.small;	iÀ;o;;" ;	iÀ;[	o;;[o;;@\;	iÀ;[o;,;["input-small;@\;	iÀo;;["
+o;;@\;	iÀ;[o;	;["
+input;@\;	iÀ;0o;,;["
+small;@\;	iÀo;;["
+o;;@\;	iÀ;[o;	;["textarea;@\;	iÀ;0o;,;["
+small;@\;	iÀo;;["
+o;;@\;	iÀ;[o;	;["select;@\;	iÀ;0o;,;["
+small;@\;	iÀ;
+[o;;i ;;;["
+width;@;o;!;@;"	90px;;";	iÃ;
+[ o;;i ;@;T;["@.input-medium,
+input.medium,
+textarea.medium,
+select.medium;	i—;o;;" ;	i—;[	o;;[o;;@ë;	i—;[o;,;["input-medium;@ë;	i—o;;["
+o;;@ë;	i—;[o;	;["
+input;@ë;	i—;0o;,;["medium;@ë;	i—o;;["
+o;;@ë;	i—;[o;	;["textarea;@ë;	i—;0o;,;["medium;@ë;	i—o;;["
+o;;@ë;	i—;[o;	;["select;@ë;	i—;0o;,;["medium;@ë;	i—;
+[o;;i ;;;["
+width;@;o;!;@;"
+150px;;";	i“;
+[ o;;i ;@;T;["<.input-large,
+input.large,
+textarea.large,
+select.large;	i◊;o;;" ;	i◊;[	o;;[o;;@∆;	i◊;[o;,;["input-large;@∆;	i◊o;;["
+o;;@∆;	i◊;[o;	;["
+input;@∆;	i◊;0o;,;["
+large;@∆;	i◊o;;["
+o;;@∆;	i◊;[o;	;["textarea;@∆;	i◊;0o;,;["
+large;@∆;	i◊o;;["
+o;;@∆;	i◊;[o;	;["select;@∆;	i◊;0o;,;["
+large;@∆;	i◊;
+[o;;i ;;;["
+width;@;o;!;@;"
+210px;;";	iÿ;
+[ o;;i ;@;T;["@.input-xlarge,
+input.xlarge,
+textarea.xlarge,
+select.xlarge;	i›;o;;" ;	i›;[	o;;[o;;@˚;	i›;[o;,;["input-xlarge;@˚;	i›o;;["
+o;;@˚;	i›;[o;	;["
+input;@˚;	i›;0o;,;["xlarge;@˚;	i›o;;["
+o;;@˚;	i›;[o;	;["textarea;@˚;	i›;0o;,;["xlarge;@˚;	i›o;;["
+o;;@˚;	i›;[o;	;["select;@˚;	i›;0o;,;["xlarge;@˚;	i›;
+[o;;i ;;;["
+width;@;o;!;@;"
+270px;;";	iﬁ;
+[ o;;i ;@;T;["D.input-xxlarge,
+input.xxlarge,
+textarea.xxlarge,
+select.xxlarge;	i„;o;;" ;	i„;[	o;;[o;;@0;	i„;[o;,;["input-xxlarge;@0;	i„o;;["
+o;;@0;	i„;[o;	;["
+input;@0;	i„;0o;,;["xxlarge;@0;	i„o;;["
+o;;@0;	i„;[o;	;["textarea;@0;	i„;0o;,;["xxlarge;@0;	i„o;;["
+o;;@0;	i„;[o;	;["select;@0;	i„;0o;,;["xxlarge;@0;	i„;
+[o;;i ;;;["
+width;@;o;!;@;"
+530px;;";	i‰;
+[ o;;i ;@;T;["textarea.xxlarge;	iÊ;o;;" ;	iÊ;[o;;[o;;@e;	iÊ;[o;	;["textarea;@e;	iÊ;0o;,;["xxlarge;@e;	iÊ;
+[o;;i ;;;["overflow-y;@;o;!;@;"	auto;;";	iÁ;
+[ o;
+;@;["ì/* Grid style input sizes
+ * This is a duplication of the main grid .columns() mixin, but subtracts 10px to account for input padding and border */;	iÍ;;;
+[ o:Sass::Tree::MixinDefNode;"formColumns;@;T;	iÏ;.[[o;;"columnSpan;@; "columnSpano;&;'"1;@;i;	iÏ;(@j;)[ ;
+[	o;;i ;;;["display;@;o;!;@;"inline-block;;";	iÌ;
+[ o;;i ;;;["
+float;@;o;!;@;"	none;;";	iÓ;
+[ o;;i ;;;["
+width;@;o;#
+;$o;#
+;$o;#
+;$o;	;"gridColumnWidth;@;	iÔ; "gridColumnWidth;@;	iÔ;%o;	;"columnSpan;@;	iÔ; "columnSpan;*;+;@;	iÔ;%o;#
+;$o;	;"gridGutterWidth;@;	iÔ; "gridGutterWidth;@;	iÔ;%o;#
+;$o;	;"columnSpan;@;	iÔ; "columnSpan;@;	iÔ;%o;&;'"1;@;i;	iÔ;(@j;)[ ;*:
+minus;*;+;*:	plus;@;	iÔ;%o;&;'"10;@;i;	iÔ;(@j;)[ ;*;?;	iÔ;
+[ o;;i ;;;["margin-left;@;o;!;@;"0;;";	i;
+[ o;;i ;@;T;["input,
+textarea,
+select;	iÙ;o;;" ;	iÙ;[o;;[o;;@∏;	iÙ;[o;	;["
+input;@∏;	iÙ;0o;;["
+o;;@∏;	iÙ;[o;	;["textarea;@∏;	iÙ;0o;;["
+o;;@∏;	iÙ;[o;	;["select;@∏;	iÙ;0;
+[o;
+;@;["/* Default columns */;	iı;;;
+[ o;;i ;@;T;["&.span1;	iˆ;o;;" ;	iˆ;[o;;[o;;@⁄;	iˆ;[o;=;@⁄;	iˆo;,;["
+span1;@⁄;	iˆ;
+[o;-;"formColumns;@;	iˆ;.[o;&;'"1;@;i;	iˆ;(@j;)[ ;
+[ ;/{ o;;i ;@;T;["&.span2;	i˜;o;;" ;	i˜;[o;;[o;;@Ò;	i˜;[o;=;@Ò;	i˜o;,;["
+span2;@Ò;	i˜;
+[o;-;"formColumns;@;	i˜;.[o;&;'"2;@;i;	i˜;(@j;)[ ;
+[ ;/{ o;;i ;@;T;["&.span3;	i¯;o;;" ;	i¯;[o;;[o;;@;	i¯;[o;=;@;	i¯o;,;["
+span3;@;	i¯;
+[o;-;"formColumns;@;	i¯;.[o;&;'"3;@;i;	i¯;(@j;)[ ;
+[ ;/{ o;;i ;@;T;["&.span4;	i˘;o;;" ;	i˘;[o;;[o;;@;	i˘;[o;=;@;	i˘o;,;["
+span4;@;	i˘;
+[o;-;"formColumns;@;	i˘;.[o;&;'"4;@;i	;	i˘;(@j;)[ ;
+[ ;/{ o;;i ;@;T;["&.span5;	i˙;o;;" ;	i˙;[o;;[o;;@6;	i˙;[o;=;@6;	i˙o;,;["
+span5;@6;	i˙;
+[o;-;"formColumns;@;	i˙;.[o;&;'"5;@;i
+;	i˙;(@j;)[ ;
+[ ;/{ o;;i ;@;T;["&.span6;	i˚;o;;" ;	i˚;[o;;[o;;@M;	i˚;[o;=;@M;	i˚o;,;["
+span6;@M;	i˚;
+[o;-;"formColumns;@;	i˚;.[o;&;'"6;@;i;	i˚;(@j;)[ ;
+[ ;/{ o;;i ;@;T;["&.span7;	i¸;o;;" ;	i¸;[o;;[o;;@d;	i¸;[o;=;@d;	i¸o;,;["
+span7;@d;	i¸;
+[o;-;"formColumns;@;	i¸;.[o;&;'"7;@;i;	i¸;(@j;)[ ;
+[ ;/{ o;;i ;@;T;["&.span8;	i˝;o;;" ;	i˝;[o;;[o;;@{;	i˝;[o;=;@{;	i˝o;,;["
+span8;@{;	i˝;
+[o;-;"formColumns;@;	i˝;.[o;&;'"8;@;i;	i˝;(@j;)[ ;
+[ ;/{ o;;i ;@;T;["&.span9;	i˛;o;;" ;	i˛;[o;;[o;;@í;	i˛;[o;=;@í;	i˛o;,;["
+span9;@í;	i˛;
+[o;-;"formColumns;@;	i˛;.[o;&;'"9;@;i;	i˛;(@j;)[ ;
+[ ;/{ o;;i ;@;T;["&.span10;	iˇ;o;;" ;	iˇ;[o;;[o;;@©;	iˇ;[o;=;@©;	iˇo;,;["span10;@©;	iˇ;
+[o;-;"formColumns;@;	iˇ;.[o;&;'"10;@;i;	iˇ;(@j;)[ ;
+[ ;/{ o;;i ;@;T;["&.span11;	i ;o;;" ;	i ;[o;;[o;;@¿;	i ;[o;=;@¿;	i o;,;["span11;@¿;	i ;
+[o;-;"formColumns;@;	i ;.[o;&;'"11;@;i;	i ;(@j;)[ ;
+[ ;/{ o;;i ;@;T;["&.span12;	i;o;;" ;	i;[o;;[o;;@◊;	i;[o;=;@◊;	io;,;["span12;@◊;	i;
+[o;-;"formColumns;@;	i;.[o;&;'"12;@;i;	i;(@j;)[ ;
+[ ;/{ o;;i ;@;T;["&.span13;	i;o;;" ;	i;[o;;[o;;@Ó;	i;[o;=;@Ó;	io;,;["span13;@Ó;	i;
+[o;-;"formColumns;@;	i;.[o;&;'"13;@;i;	i;(@j;)[ ;
+[ ;/{ o;;i ;@;T;["&.span14;	i;o;;" ;	i;[o;;[o;;@	;	i;[o;=;@	;	io;,;["span14;@	;	i;
+[o;-;"formColumns;@;	i;.[o;&;'"14;@;i;	i;(@j;)[ ;
+[ ;/{ o;;i ;@;T;["&.span15;	i;o;;" ;	i;[o;;[o;;@	;	i;[o;=;@	;	io;,;["span15;@	;	i;
+[o;-;"formColumns;@;	i;.[o;&;'"15;@;i;	i;(@j;)[ ;
+[ ;/{ o;;i ;@;T;["&.span16;	i;o;;" ;	i;[o;;[o;;@3	;	i;[o;=;@3	;	io;,;["span16;@3	;	i;
+[o;-;"formColumns;@;	i;.[o;&;'"16;@;i;	i;(@j;)[ ;
+[ ;/{ o;
+;@;["(/* Disabled and read-only inputs */;	i;;;
+[ o;;i ;@;T;["qinput[disabled],
+select[disabled],
+textarea[disabled],
+input[readonly],
+select[readonly],
+textarea[readonly];	i;o;;" ;	i;[o;;[o;;@N	;	i;[o;	;["
+input;@N	;	i;0o;0;["disabled;@N	;0;	i;0;*0o;;["
+o;;@N	;	i;[o;	;["select;@N	;	i;0o;0;["disabled;@N	;0;	i;0;*0o;;["
+o;;@N	;	i;[o;	;["textarea;@N	;	i;0o;0;["disabled;@N	;0;	i;0;*0o;;["
+o;;@N	;	i;[o;	;["
+input;@N	;	i;0o;0;["readonly;@N	;0;	i;0;*0o;;["
+o;;@N	;	i;[o;	;["select;@N	;	i;0o;0;["readonly;@N	;0;	i;0;*0o;;["
+o;;@N	;	i;[o;	;["textarea;@N	;	i;0o;0;["readonly;@N	;0;	i;0;*0;
+[o;;i ;;;["background-color;@;o;!;@;"#f5f5f5;;";	i;
+[ o;;i ;;;["border-color;@;o;!;@;"	#ddd;;";	i;
+[ o;;i ;;;["cursor;@;o;!;@;"not-allowed;;";	i;
+[ o;
+;@;[" /* Actions (the buttons) */;	i;;;
+[ o;;i ;@;T;[".actions;	i;o;;" ;	i;[o;;[o;;@¨	;	i;[o;,;["actions;@¨	;	i;
+[o;;i ;;;["background;@;o;!;@;"#f5f5f5;;";	i;
+[ o;;i ;;;["margin-top;@;o;	;"baseline;@;	i; "baseline;	i;
+[ o;;i ;;;["margin-bottom;@;o;	;"baseline;@;	i; "baseline;	i;
+[ o;;i ;;;["padding;@;o;1	;@;[	o;#
+;$o;	;"baseline;@;	i; "baseline;@;	i;%o;&;'"1;@;i;	i;(@j;)[ ;*;?o;&;'"	20px;@;i;	i;([ ;)["pxo;	;"baseline;@;	i; "baselineo;&;'"
+150px;@;iñ;	i;([ ;)["px;	i;3;4;	i;
+[ o;;i ;;;["border-top;@;o;!;@;"1px solid #ddd;;";	i;
+[ o;-;"border-radius;@;	i;.[o;1	;@;[	o;&;'"0;@;i ;	i;(@j;)[ o;&;'"0;@;i ;	i;(@j;)[ o;&;'"3px;@;i;	i;([ ;)["pxo;&;'"3px;@;i;	i;([ ;)["px;	i;3;4;
+[ ;/{ o;;i ;@;T;[".secondary-action;	i;o;;" ;	i;[o;;[o;;@
+;	i;[o;,;["secondary-action;@
+;	i;
+[o;;i ;;;["
+float;@;o;!;@;"
+right;;";	i;
+[ o;;i ;@;T;["a;	i;o;;" ;	i;[o;;[o;;@
+;	i;[o;	;["a;@
+;	i;0;
+[o;;i ;;;["line-height;@;o;!;@;"	30px;;";	i;
+[ o;;i ;@;T;["&:hover;	i ;o;;" ;	i ;[o;;[o;;@-
+;	i ;[o;=;@-
+;	i o;5
+;["
+hover;@-
+;60;	i ;;7;
+[o;;i ;;;["text-decoration;@;o;!;@;"underline;;";	i!;
+[ o;
+;@;["/* Help Text */;	i';;;
+[ o;;i ;@;T;[".help-inline,
+.help-block;	i);o;;" ;	i);[o;;[o;;@F
+;	i);[o;,;["help-inline;@F
+;	i)o;;["
+o;;@F
+;	i);[o;,;["help-block;@F
+;	i);
+[o;;i ;;;["font-size;@;o;#
+;$o;	;"basefont;@;	i*; "basefont;@;	i*;%o;&;'"2;@;i;	i*;(@j;)[ ;*;?;	i*;
+[ o;;i ;;;["line-height;@;o;	;"baseline;@;	i+; "baseline;	i+;
+[ o;;i ;;;["
+color;@;o;	;"grayLight;@;	i,; "grayLight;	i,;
+[ o;;i ;@;T;[".help-inline;	i.;o;;" ;	i.;[o;;[o;;@u
+;	i.;[o;,;["help-inline;@u
+;	i.;
+[
+o;;i ;;;["padding-left;@;o;!;@;"5px;;";	i/;
+[ o;;i ;;;["*position;@;o;!;@;"relative;;";	i0;
+[ o;
+;@;["/* IE6-7 */;	i0;;;
+[ o;;i ;;;["	*top;@;o;&;'"	-5px;@;iˆ;	i1;([ ;)["px;	i1;
+[ o;
+;@;["/* IE6-7 */;	i1;;;
+[ o;
+;@;[""/* Big blocks of help text */;	i4;;;
+[ o;;i ;@;T;[".help-block;	i5;o;;" ;	i5;[o;;[o;;@§
+;	i5;[o;,;["help-block;@§
+;	i5;
+[o;;i ;;;["display;@;o;!;@;"
+block;;";	i6;
+[ o;;i ;;;["max-width;@;o;!;@;"
+600px;;";	i7;
+[ o;
+;@;["D/* Inline Fields (input fields that appear as inline objects */;	i:;;;
+[ o;;i ;@;T;[".inline-inputs;	i;;o;;" ;	i;;[o;;[o;;@¬
+;	i;;[o;,;["inline-inputs;@¬
+;	i;;
+[
+o;;i ;;;["
+color;@;o;	;"	gray;@;	i<; "	gray;	i<;
+[ o;;i ;@;T;["span, input;	i=;o;;" ;	i=;[o;;[o;;@◊
+;	i=;[o;	;["	span;@◊
+;	i=;0o;;[o;;@◊
+;	i=;[o;	;["
+input;@◊
+;	i=;0;
+[o;;i ;;;["display;@;o;!;@;"inline-block;;";	i>;
+[ o;;i ;@;T;["input.mini;	i@;o;;" ;	i@;[o;;[o;;@Ú
+;	i@;[o;	;["
+input;@Ú
+;	i@;0o;,;["	mini;@Ú
+;	i@;
+[o;;i ;;;["
+width;@;o;!;@;"	60px;;";	iA;
+[ o;;i ;@;T;["input.small;	iC;o;;" ;	iC;[o;;[o;;@	;	iC;[o;	;["
+input;@	;	iC;0o;,;["
+small;@	;	iC;
+[o;;i ;;;["
+width;@;o;!;@;"	90px;;";	iD;
+[ o;;i ;@;T;["	span;	iF;o;;" ;	iF;[o;;[o;;@ ;	iF;[o;	;["	span;@ ;	iF;0;
+[o;;i ;;;["padding;@;o;!;@;"0 2px 0 1px;;";	iG;
+[ o;
+;@;["U/* Allow us to put symbols and text within the input field for a cleaner look */;	iK;;;
+[ o;;i ;@;T;["".input-prepend,
+.input-append;	iM;o;;" ;	iM;[o;;[o;;@8;	iM;[o;,;["input-prepend;@8;	iMo;;["
+o;;@8;	iM;[o;,;["input-append;@8;	iM;
+[o;;i ;@;T;["
+input;	iN;o;;" ;	iN;[o;;[o;;@N;	iN;[o;	;["
+input;@N;	iN;0;
+[o;-;"border-radius;@;	iO;.[o;1	;@;[	o;&;'"0;@;i ;	iO;(@j;)[ o;&;'"3px;@;i;	iO;([ ;)["pxo;&;'"3px;@;i;	iO;([ ;)["pxo;&;'"0;@;i ;	iO;(@j;)[ ;	iO;3;4;
+[ ;/{ o;;i ;@;T;[".add-on;	iQ;o;;" ;	iQ;[o;;[o;;@s;	iQ;[o;,;["add-on;@s;	iQ;
+[o;;i ;;;["position;@;o;!;@;"relative;;";	iR;
+[ o;;i ;;;["background;@;o;!;@;"#f5f5f5;;";	iS;
+[ o;;i ;;;["border;@;o;!;@;"1px solid #ccc;;";	iT;
+[ o;;i ;;;["z-index;@;o;!;@;"2;;";	iU;
+[ o;;i ;;;["
+float;@;o;!;@;"	left;;";	iV;
+[ o;;i ;;;["display;@;o;!;@;"
+block;;";	iW;
+[ o;;i ;;;["
+width;@;o;!;@;"	auto;;";	iX;
+[ o;;i ;;;["min-width;@;o;!;@;"	16px;;";	iY;
+[ o;;i ;;;["height;@;o;!;@;"	18px;;";	iZ;
+[ o;;i ;;;["padding;@;o;!;@;"4px 4px 4px 5px;;";	i[;
+[ o;;i ;;;["margin-right;@;o;&;'"	-1px;@;i˙;	i\;([ ;)["px;	i\;
+[ o;;i ;;;["font-weight;@;o;!;@;"normal;;";	i];
+[ o;;i ;;;["line-height;@;o;!;@;"	18px;;";	i^;
+[ o;;i ;;;["
+color;@;o;	;"grayLight;@;	i_; "grayLight;	i_;
+[ o;;i ;;;["text-align;@;o;!;@;"center;;";	i`;
+[ o;;i ;;;["text-shadow;@;o;1	;@;[	o;&;'"0;@;i ;	ia;(@j;)[ o;&;'"1px;@;i;	ia;([ ;)["pxo;&;'"0;@;i ;	ia;(@j;)[ o;	;"
+white;@;	ia; "
+white;	ia;3;4;	ia;
+[ o;-;"border-radius;@;	ib;.[o;1	;@;[	o;&;'"3px;@;i;	ib;([ ;)["pxo;&;'"0;@;i ;	ib;(@j;)[ o;&;'"0;@;i ;	ib;(@j;)[ o;&;'"3px;@;i;	ib;([ ;)["px;	ib;3;4;
+[ ;/{ o;;i ;@;T;[".active;	id;o;;" ;	id;[o;;[o;;@
+;	id;[o;,;["active;@
+;	id;
+[o;;i ;;;["background;@;o;2
+;"lighten;@;	ie;.[o;	;"
+green;@;	ie; "
+greeno;&;'"30;@;i#;	ie;(@j;)[ ;/{ ;	ie;
+[ o;;i ;;;["border-color;@;o;	;"
+green;@;	if; "
+green;	if;
+[ o;;i ;@;T;[".input-prepend;	ii;o;;" ;	ii;[o;;[o;;@-;	ii;[o;,;["input-prepend;@-;	ii;
+[o;;i ;@;T;[".add-on;	ij;o;;" ;	ij;[o;;[o;;@;;	ij;[o;,;["add-on;@;;	ij;
+[o;;i ;;;["*margin-top;@;o;!;@;"1px;;";	ik;
+[ o;
+;@;["/* IE6-7 */;	ik;;;
+[ o;;i ;@;T;[".input-append;	in;o;;" ;	in;[o;;[o;;@S;	in;[o;,;["input-append;@S;	in;
+[o;;i ;@;T;["
+input;	io;o;;" ;	io;[o;;[o;;@a;	io;[o;	;["
+input;@a;	io;0;
+[o;;i ;;;["
+float;@;o;!;@;"	left;;";	ip;
+[ o;-;"border-radius;@;	iq;.[o;1	;@;[	o;&;'"3px;@;i;	iq;([ ;)["pxo;&;'"0;@;i ;	iq;(@j;)[ o;&;'"0;@;i ;	iq;(@j;)[ o;&;'"3px;@;i;	iq;([ ;)["px;	iq;3;4;
+[ ;/{ o;;i ;@;T;[".add-on;	is;o;;" ;	is;[o;;[o;;@å;	is;[o;,;["add-on;@å;	is;
+[o;-;"border-radius;@;	it;.[o;1	;@;[	o;&;'"0;@;i ;	it;(@j;)[ o;&;'"3px;@;i;	it;([ ;)["pxo;&;'"3px;@;i;	it;([ ;)["pxo;&;'"0;@;i ;	it;(@j;)[ ;	it;3;4;
+[ ;/{ o;;i ;;;["margin-right;@;o;!;@;"0;;";	iu;
+[ o;;i ;;;["margin-left;@;o;&;'"	-1px;@;i˙;	iv;([ ;)["px;	iv;
+[ o;
+;@;["B/* Stacked options for forms (radio buttons or checkboxes) */;	iz;;;
+[ o;;i ;@;T;[".inputs-list;	i{;o;;" ;	i{;[o;;[o;;@ƒ;	i{;[o;,;["inputs-list;@ƒ;	i{;
+[o;;i ;;;["margin;@;o;!;@;"0 0 5px;;";	i|;
+[ o;;i ;;;["
+width;@;o;!;@;"	100%;;";	i};
+[ o;;i ;@;T;["li;	i~;o;;" ;	i~;[o;;[o;;@ﬁ;	i~;[o;	;["li;@ﬁ;	i~;0;
+[o;;i ;;;["display;@;o;!;@;"
+block;;";	i;
+[ o;;i ;;;["padding;@;o;!;@;"0;;";	iÄ;
+[ o;;i ;;;["
+width;@;o;!;@;"	100%;;";	iÅ;
+[ o;;i ;@;T;["
+label;	iÉ;o;;" ;	iÉ;[o;;[o;;@˛;	iÉ;[o;	;["
+label;@˛;	iÉ;0;
+[o;;i ;;;["display;@;o;!;@;"
+block;;";	iÑ;
+[ o;;i ;;;["
+float;@;o;!;@;"	none;;";	iÖ;
+[ o;;i ;;;["
+width;@;o;!;@;"	auto;;";	iÜ;
+[ o;;i ;;;["padding;@;o;!;@;"0;;";	iá;
+[ o;;i ;;;["line-height;@;o;	;"baseline;@;	ià; "baseline;	ià;
+[ o;;i ;;;["text-align;@;o;!;@;"	left;;";	iâ;
+[ o;;i ;;;["white-space;@;o;!;@;"normal;;";	iä;
+[ o;;i ;@;T;["strong;	iã;o;;" ;	iã;[o;;[o;;@7;	iã;[o;	;["strong;@7;	iã;0;
+[o;;i ;;;["
+color;@;o;	;"	gray;@;	iå; "	gray;	iå;
+[ o;;i ;@;T;["
+small;	ié;o;;" ;	ié;[o;;[o;;@L;	ié;[o;	;["
+small;@L;	ié;0;
+[o;;i ;;;["font-size;@;o;#
+;$o;	;"basefont;@;	iè; "basefont;@;	iè;%o;&;'"2;@;i;	iè;(@j;)[ ;*;?;	iè;
+[ o;;i ;;;["font-weight;@;o;!;@;"normal;;";	iê;
+[ o;;i ;@;T;[".inputs-list;	iì;o;;" ;	iì;[o;;[o;;@k;	iì;[o;,;["inputs-list;@k;	iì;
+[o;;i ;;;["margin-left;@;o;!;@;"	25px;;";	iî;
+[ o;;i ;;;["margin-bottom;@;o;!;@;"	10px;;";	iï;
+[ o;;i ;;;["padding-top;@;o;!;@;"0;;";	iñ;
+[ o;;i ;@;T;["&:first-child;	iò;o;;" ;	iò;[o;;[o;;@ã;	iò;[o;=;@ã;	iòo;5
+;["first-child;@ã;60;	iò;;7;
+[o;;i ;;;["padding-top;@;o;!;@;"6px;;";	iô;
+[ o;;i ;@;T;["li + li;	iõ;o;;" ;	iõ;[o;;[o;;@†;	iõ;[o;	;["li;@†;	iõ;0"+o;;@†;	iõ;[o;	;["li;@†;	iõ;0;
+[o;;i ;;;["padding-top;@;o;!;@;"2px;;";	iú;
+[ o;;i ;@;T;[".input[type=radio],
+  input[type=checkbox];	iü;o;;" ;	iü;[o;;[o;;@∫;	iü;[o;	;["
+input;@∫;	iü;0o;0;["	type;@∫;["
+radio;	iü;0;*"=o;;["
+o;;@∫;	iü;[o;	;["
+input;@∫;	iü;0o;0;["	type;@∫;["checkbox;	iü;0;*"=;
+[o;;i ;;;["margin-bottom;@;o;!;@;"0;;";	i†;
+[ o;
+;@;["/* Stacked forms */;	i§;;;
+[ o;;i ;@;T;[".form-stacked;	i•;o;;" ;	i•;[o;;[o;;@Ê;	i•;[o;,;["form-stacked;@Ê;	i•;
+[o;;i ;;;["padding-left;@;o;!;@;"	20px;;";	i¶;
+[ o;;i ;@;T;["fieldset;	iß;o;;" ;	iß;[o;;[o;;@˙;	iß;[o;	;["fieldset;@˙;	iß;0;
+[o;;i ;;;["padding-top;@;o;#
+;$o;	;"baseline;@;	i®; "baseline;@;	i®;%o;&;'"2;@;i;	i®;(@j;)[ ;*:div;	i®;
+[ o;;i ;@;T;["legend;	i™;o;;" ;	i™;[o;;[o;;@;	i™;[o;	;["legend;@;	i™;0;
+[o;;i ;;;["padding-left;@;o;!;@;"0;;";	i´;
+[ o;;i ;@;T;["
+label;	i≠;o;;" ;	i≠;[o;;[o;;@';	i≠;[o;	;["
+label;@';	i≠;0;
+[o;;i ;;;["display;@;o;!;@;"
+block;;";	iÆ;
+[ o;;i ;;;["
+float;@;o;!;@;"	none;;";	iØ;
+[ o;;i ;;;["
+width;@;o;!;@;"	auto;;";	i∞;
+[ o;;i ;;;["font-weight;@;o;!;@;"	bold;;";	i±;
+[ o;;i ;;;["text-align;@;o;!;@;"	left;;";	i≤;
+[ o;;i ;;;["line-height;@;o;!;@;"	20px;;";	i≥;
+[ o;;i ;;;["padding-top;@;o;!;@;"0;;";	i¥;
+[ o;;i ;@;T;[".clearfix;	i∂;o;;" ;	i∂;[o;;[o;;@_;	i∂;[o;,;["clearfix;@_;	i∂;
+[o;;i ;;;["margin-bottom;@;o;#
+;$o;	;"baseline;@;	i∑; "baseline;@;	i∑;%o;&;'"2;@;i;	i∑;(@j;)[ ;*;A;	i∑;
+[ o;;i ;@;T;["div.input;	i∏;o;;" ;	i∏;[o;;[o;;@x;	i∏;[o;	;["div;@x;	i∏;0o;,;["
+input;@x;	i∏;
+[o;;i ;;;["margin-left;@;o;!;@;"0;;";	iπ;
+[ o;;i ;@;T;[".inputs-list;	iº;o;;" ;	iº;[o;;[o;;@è;	iº;[o;,;["inputs-list;@è;	iº;
+[o;;i ;;;["margin-bottom;@;o;!;@;"0;;";	iΩ;
+[ o;;i ;@;T;["li;	iæ;o;;" ;	iæ;[o;;[o;;@£;	iæ;[o;	;["li;@£;	iæ;0;
+[o;;i ;;;["padding-top;@;o;!;@;"0;;";	iø;
+[ o;;i ;@;T;["
+label;	i¿;o;;" ;	i¿;[o;;[o;;@∑;	i¿;[o;	;["
+label;@∑;	i¿;0;
+[o;;i ;;;["font-weight;@;o;!;@;"normal;;";	i¡;
+[ o;;i ;;;["padding-top;@;o;!;@;"0;;";	i¬;
+[ o;;i ;@;T;["div.clearfix.error;	i∆;o;;" ;	i∆;[o;;[o;;@—;	i∆;[o;	;["div;@—;	i∆;0o;,;["clearfix;@—;	i∆o;,;["
+error;@—;	i∆;
+[
+o;;i ;;;["padding-top;@;o;!;@;"	10px;;";	i«;
+[ o;;i ;;;["padding-bottom;@;o;!;@;"	10px;;";	i»;
+[ o;;i ;;;["padding-left;@;o;!;@;"	10px;;";	i…;
+[ o;;i ;;;["margin-top;@;o;!;@;"0;;";	i ;
+[ o;;i ;;;["margin-left;@;o;&;'"
+-10px;@;iÒ;	iÀ;([ ;)["px;	iÀ;
+[ o;;i ;@;T;[".actions;	iÕ;o;;" ;	iÕ;[o;;[o;;@;	iÕ;[o;,;["actions;@;	iÕ;
+[o;;i ;;;["margin-left;@;o;&;'"
+-20px;@;iÁ;	iŒ;([ ;)["px;	iŒ;
+[ o;;i ;;;["padding-left;@;o;!;@;"	20px;;";	iœ;
+[ 
